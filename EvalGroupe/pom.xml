@@ -35,7 +35,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>jardin.Terre</mainClass>
+							<mainClass>game.Jeu</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
