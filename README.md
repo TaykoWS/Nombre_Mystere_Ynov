@@ -1,5 +1,5 @@
 # Nombre_Mystere_Ynov
--- Nombre Mystère en JAVA (sous Maven)
+**Nombre Mystère en JAVA (sous Maven)**
 
 # B2B - Projet d'évaluation en groupe réalisé par :
 
