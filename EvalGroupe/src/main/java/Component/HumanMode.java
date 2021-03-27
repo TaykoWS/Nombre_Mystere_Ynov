@@ -129,8 +129,7 @@ public class HumanMode {
 				System.out.println("L'ordinateur à réussi à trouver votre nombre mystère qui était : " + PlayerValue);
 				EndGame = true;
 			} else if (NbEssai + i == 10) {
-				System.out.println(
-						"Quelle chance ! L'ordinateur n'a pas trouvé votre nombre mystère qui était : " + PlayerValue);
+				System.out.println("Quelle chance ! L'ordinateur n'a pas trouvé votre nombre mystère qui était : " + PlayerValue);
 				EndGame = true;
 			} else {
 

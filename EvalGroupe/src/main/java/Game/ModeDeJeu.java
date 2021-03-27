@@ -105,13 +105,13 @@ public class ModeDeJeu {
 
 		if (iamode.EndGame == true) {
 			// Rejoue mode IA
-			iamode.EndGame = false;
+			hmode.EndGame = false;
 			IaMode iamode = new IaMode();
 			iamode.startGame(vieJoueur);
 			ReloadGame();
 		} else if (hmode.EndGame == true) {
 			// Rejoue mode Humain
-			hmode.EndGame = false;
+			iamode.EndGame = false;
 			HumanMode hmode = new HumanMode();
 			hmode.startGame(EssaiIA, IaLife);
 			ReloadGame();
