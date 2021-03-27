@@ -3,7 +3,7 @@ Nombre Mystère en JAVA (sous Maven)
 
 B2B - Projet d'évaluation en groupe réalisé par :
 
-SAINT-HONORÉ Anthony
+SAINT-HONORÉ Anthony &
 DANG Ngoc Ha Lan
 
 Lancer le jeu 
