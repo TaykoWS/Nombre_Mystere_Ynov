@@ -1,5 +1,4 @@
 package component;
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,6 +10,8 @@ public class HumanMode {
 	// Les valeurs pour le jeu
 	String PlayerValue;
 	String IaValue;
+	String IaValuenew;
+	String[] Guess = new String[4];
 
 	public HumanMode() {
 		// TODO Auto-generated constructor stub
@@ -22,33 +23,70 @@ public class HumanMode {
 		System.out.println("Veuillez écrire un nombre à 4 chiffre entre 0000 et 9999");
 		Scanner sc = new Scanner(System.in);
 		String stockNumber = sc.nextLine();
-		PlayerValue = stockNumber;
-
-		return stockNumber;
+		if(stockNumber.length()==4) {
+			PlayerValue = stockNumber;
+			return stockNumber;
+		}
+		else {
+			System.out.println("Merci de saisir 4 chiffres.");
+			return GeneratePlayerNumber();
+		}
 	}
 
 	// Créer une valeur aléatoire à 4 chiffre
 	private String RandomValue() {
-
 		// On ajoute une valeur aléatoire entre 0 et 9
 		int min = 0;
 		int max = 9;
-
+		//chiffres que l'ordinateur devine
+		Integer value1;
+		Integer value2;
+		Integer value3;
+		Integer value4;
+		
 		Random random = new Random();
+		//si l'ordi a lancé le random au moins une seule fois
+		if(IaValue!=null) {
 
-		Integer value1 = random.nextInt(max + min);
-		Integer value2 = random.nextInt(max + min);
-		Integer value3 = random.nextInt(max + min);
-		Integer value4 = random.nextInt(max + min);
+			Integer c1 =Integer.parseInt(IaValue.substring(0, 1));
+			Integer c2= Integer.parseInt(IaValue.substring(1, 2));
+			Integer c3= Integer.parseInt(IaValue.substring(2, 3));
+			Integer c4= Integer.parseInt(IaValue.substring(3));
+			
+			int[] IaValueList = {c1,c2,c3,c4};
+			for (int i = 0; i < Guess.length; i++) {
+				// si chiffre deviné est supérieur que chiffre mystère
+				if(Guess[i]=="+" ) {
+					//random va parcourir de chiffre déviné -> chiffre max
+					IaValueList[i]=random.nextInt((max - IaValueList[i]) + 1) + IaValueList[i];
+					
+				}
+				//  si chiffre deviné est inférieur que chiffre mystère
+				else if(Guess[i]=="-") {
+					//random va parcourir de chiffre déviné -> chiffre min
+					IaValueList[i]=random.nextInt((IaValueList[i] - min) + 1) + min;
+				}
+				// si chiffre mystère = chiffre mystère
+				else {
+					IaValueList[i]=IaValueList[i];
+				}
+			}
+			IaValue= String.valueOf(IaValueList[0]) +String.valueOf(IaValueList[1])+String.valueOf(IaValueList[2])+String.valueOf(IaValueList[3]);
+		}	
+		//si l'ordi commence à deviner
+		else {
+			value1 = random.nextInt((max - min) + 1) + min;
+			value2 = random.nextInt((max - min) + 1) + min;
+			value3 = random.nextInt((max - min) + 1) + min;
+			value4 = random.nextInt((max - min) + 1) + min;
+			IaValue = value1.toString() + value2.toString() + value3.toString() + value4.toString();
+		}
 
-		String Rvalue = value1.toString() + value2.toString() + value3.toString() + value4.toString();
-		IaValue = Rvalue;
-
-		return Rvalue;
+		return IaValue;
 
 	}
 	
-	public int ConversionSearchValue(String s1, String s2) {
+	public String[] ConversionSearchValue(String s1, String s2) {
 		Integer nbPlayer1 = Integer.parseInt(s1.substring(0, 1));
 		Integer nbPlayer2 = Integer.parseInt(s1.substring(1, 2));
 		Integer nbPlayer3 = Integer.parseInt(s1.substring(2, 3));
@@ -61,51 +99,25 @@ public class HumanMode {
 		
 		int NombrePlayerConvert[] = {nbPlayer1, nbPlayer2, nbPlayer3, nbPlayer4};
 		int NombreIaConvert[] = {nbIa1, nbIa2, nbIa3, nbIa4};
-		int Guess[] = new int[4];
-		Integer tabGuess[] = new Integer[4];
-		
-		int firstElem = 0;
-		int lastElem = 9;
-		int milieu = (firstElem + lastElem) / 2;
-		
 		//Recherche dichotomique
 		for (int i = 0; i < NombrePlayerConvert.length; i++) {
-			if(NombrePlayerConvert[i] > NombreIaConvert[i]) {
-				System.out.println("+");
-				Guess[i] = milieu + 1;
-			} 
-			else if(NombrePlayerConvert[i] < NombreIaConvert[i]) {
-				System.out.println("-");
-				Guess[i] = milieu - 1;
+			if(NombrePlayerConvert[i] != NombreIaConvert[i]) {
+				if(NombrePlayerConvert[i] > NombreIaConvert[i]) {
+					Guess[i]="+";
+				} 
+				else if(NombrePlayerConvert[i] < NombreIaConvert[i]) {
+					Guess[i]="-";
+				}
 			}
 			else {
-				System.out.println("=");
-				Guess[i] = milieu;
+				Guess[i] = String.valueOf(NombrePlayerConvert[i]);
 			}
 		}
-		
-		//TODO le tableau est constament remis à 0
-		for (int i = 0; i < Guess.length; i++) {
-			if(Guess[i] == NombrePlayerConvert[i]) {
-				System.out.println("Votre nombre est : " + PlayerValue);
-				System.out.println("Un chiffre trouvé : " + Guess[i]);	
-			}
-			
-			if(tabGuess[i] == null) {
-				tabGuess[i] = Guess[i];					
-			}
-			else if(tabGuess[i] != null) {
-				tabGuess[i] = tabGuess[i];	
-			}
-			System.out.println("valeur tab : " + tabGuess[i]);
-		}
-		
-		System.out.println(nbPlayer1);
-		System.out.println(nbPlayer2);
-		System.out.println(nbPlayer3);
-		System.out.println(nbPlayer4);
-		
-		return nbPlayer1;
+		//afficher la suggestion
+		IaValuenew= Guess[0]+Guess[1]+Guess[2]+Guess[3];
+		System.out.println("Il tente de découvrir votre nombre mystère");
+		System.out.println(IaValuenew);
+		return Guess;
 		
 	}
 	
@@ -117,22 +129,20 @@ public class HumanMode {
 		System.out.println("Votre nombre est : " + PlayerValue);
 		System.out.println("------------------------------------------------------");
 
-		for (int i = 0; i <= maxLife; i++) {
+		for (int i = 1; i <= maxLife; i++) {
 			System.out.println("L'ordinateur en est a son " + (NbEssai + i) + " essais");
-			System.out.println("Il tente de découvrir votre nombre mystère");
 			RandomValue();
-			System.out.println(IaValue);
 			ConversionSearchValue(PlayerValue, IaValue);
 			System.out.println("------------------------------------------------------");
 
 			if (IaValue.equals(PlayerValue) == true) {
 				System.out.println("L'ordinateur à réussi à trouver votre nombre mystère qui était : " + PlayerValue);
+				maxLife=0;
 				EndGame = true;
 			} else if (NbEssai + i == 10) {
 				System.out.println("Quelle chance ! L'ordinateur n'a pas trouvé votre nombre mystère qui était : " + PlayerValue);
-				EndGame = true;
-			} else {
-
+				maxLife=0;
+				EndGame = true;	
 			}
 		}
 
