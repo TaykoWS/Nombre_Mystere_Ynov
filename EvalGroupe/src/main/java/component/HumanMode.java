@@ -115,7 +115,7 @@ public class HumanMode {
 		}
 		//afficher la suggestion
 		IaValuenew= Guess[0]+Guess[1]+Guess[2]+Guess[3];
-		System.out.println("Il tente de découvrir votre nombre mystère");
+		System.out.println("Voici ce qu'il a actuellement trouvé : ");
 		System.out.println(IaValuenew);
 		return Guess;
 		
@@ -132,6 +132,7 @@ public class HumanMode {
 		for (int i = 1; i <= maxLife; i++) {
 			System.out.println("L'ordinateur en est a son " + (NbEssai + i) + " essais");
 			RandomValue();
+			System.out.println("Il tente de découvrir votre nombre mystère, et il a essayé : " + IaValue);
 			ConversionSearchValue(PlayerValue, IaValue);
 			System.out.println("------------------------------------------------------");
 
